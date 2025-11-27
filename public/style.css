@@ -1,0 +1,71 @@
+:root{
+  --bg:#0f1724;
+  --card:#0b1220;
+  --muted:#98a0b3;
+  --accent:#7c5cff;
+  --accent-2:#5de4b7;
+  --me:#2b3650;
+  --glass: rgba(255,255,255,0.03);
+  --radius:12px;
+  --trans:200ms;
+}
+*{box-sizing:border-box}
+html,body,#app{height:100%;}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;color:#e6eef8;background:linear-gradient(180deg,#071021 0%, #04111b 100%);display:flex;align-items:center;justify-content:center;padding:24px}
+#app{width:100%;max-width:1100px}
+.panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:var(--radius);box-shadow:0 6px 30px rgba(2,6,23,0.6);padding:20px}
+/* Join panel */
+#join{display:flex;gap:20px;align-items:center;justify-content:space-between;padding:28px}
+.brand h1{margin:0;font-size:28px;letter-spacing:1px;color:var(--accent)}
+.brand .tag{margin:6px 0 0;color:var(--muted)}
+.join-controls{display:flex;flex-direction:column;gap:12px;min-width:320px}
+.field{display:flex;flex-direction:column}
+.field span{font-size:12px;color:var(--muted);margin-bottom:6px}
+.field input{padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;outline:none;transition:box-shadow var(--trans),border-color var(--trans)}
+.field input:focus{box-shadow:0 4px 18px rgba(124,92,255,0.12);border-color:rgba(124,92,255,0.25)}
+.btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:none;color:#071023;padding:10px 14px;border-radius:10px;font-weight:600;cursor:pointer;box-shadow:0 6px 18px rgba(92,67,255,0.12);transition:transform var(--trans),opacity var(--trans)}
+.btn:hover{transform:translateY(-2px)}
+.help{margin-top:12px;color:var(--muted);font-size:13px}
+
+/* Chat layout */
+.chat-panel{display:flex;flex-direction:column;height:75vh;min-height:520px;max-height:75vh}
+.chat-header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-bottom:1px solid rgba(255,255,255,0.02)}
+.room-name{font-weight:700;font-size:18px}
+.room-sub{font-size:13px;color:var(--muted)}
+.chat-body{display:flex;flex:1;overflow:hidden}
+.sidebar{width:220px;border-right:1px solid rgba(255,255,255,0.02);padding:14px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
+.sidebar-title{font-size:13px;color:var(--muted);margin-bottom:8px}
+.users-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.users-list li{padding:8px;border-radius:8px;background:var(--glass);display:flex;align-items:center;gap:10px;transition:background var(--trans),transform var(--trans)}
+.users-list li .dot{width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.users-list li:hover{transform:translateX(6px)}
+
+.messages-area{flex:1;display:flex;flex-direction:column;padding:14px;min-height:0}
+.messages{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:70%;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,0.02);backdrop-filter:blur(6px);box-shadow:0 6px 18px rgba(3,6,20,0.4);opacity:0;transform:translateY(6px);animation:pop .28s forwards}
+.msg .author{display:block;font-weight:700;font-size:13px;margin-bottom:6px}
+.msg .text{display:block;font-size:15px;line-height:1.3;color:#eaf0ff}
+.msg.me{margin-left:auto}
+
+/* Small-screen tweak to keep bottom anchoring */
+@media (max-width:800px){
+  .messages{flex-direction:column}
+}
+
+.msg-form{display:flex;gap:8px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.02)}
+.msg-input{flex:1;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit;outline:none}
+.msg-input:focus{box-shadow:0 6px 30px rgba(13,44,84,0.3);border-color:rgba(124,92,255,0.25)}
+.btn.send{padding:10px 16px}
+
+/* Beta badge */
+.beta-badge{position:fixed;top:18px;right:18px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#071023;padding:6px 10px;border-radius:999px;font-weight:700;letter-spacing:1px;box-shadow:0 6px 18px rgba(92,67,255,0.12);z-index:60}
+
+/* small screens */
+@media (max-width:800px){
+  .chat-body{flex-direction:column}
+  .sidebar{width:100%;order:2;display:flex;overflow:auto}
+  .messages-area{order:1}
+  .users-list{flex-direction:row}
+  .users-list li{min-width:80px}
+  .msg{max-width:92%}
+}

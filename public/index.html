@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bomb Chat</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div id="app">
+    <div class="beta-badge">BETA TESTING</div>
+
+    <div id="join" class="panel">
+      <div class="brand">
+        <h1>Bomb</h1>
+        <p class="tag">A tiny, modern LAN chat</p>
+      </div>
+      <div class="join-controls">
+        <label class="field">
+          <span>Username</span>
+          <input id="username" placeholder="e.g. alice" maxlength="32" />
+        </label>
+        <label class="field">
+          <span>Room</span>
+          <input id="room" placeholder="lobby" maxlength="64" />
+        </label>
+        <div class="actions">
+          <button id="joinBtn" class="btn">Join Room</button>
+        </div>
+      </div>
+      <p class="help">Tip: open multiple tabs or devices on the same network and join the same room.</p>
+    </div>
+
+    <div id="chat" class="panel chat-panel" style="display:none;">
+      <header class="chat-header">
+        <div class="room-info">
+          <div id="roomName" class="room-name">lobby</div>
+          <div id="users" class="room-sub">Users online</div>
+        </div>
+        <div class="brand-small">Bomb</div>
+      </header>
+
+      <div class="chat-body">
+        <aside class="sidebar">
+          <div class="sidebar-title">People</div>
+          <ul id="usersList" class="users-list">
+            <!-- users rendered here -->
+          </ul>
+        </aside>
+
+        <main class="messages-area">
+          <div id="messages" class="messages"></div>
+
+          <form id="msgForm" class="msg-form">
+            <input id="msgInput" class="msg-input" autocomplete="off" placeholder="Say something…" />
+            <button class="btn send">Send</button>
+          </form>
+        </main>
+      </div>
+    </div>
+  </div>
+  <script src="/main.js"></script>
+</body>
+</html>
