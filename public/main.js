@@ -12,42 +12,13 @@
   const usersDiv = $('users');
   const usersList = $('usersList');
 
-  // debug panel
-  let debugPanel;
-  function ensureDebug(){
-    if (debugPanel) return debugPanel;
-    debugPanel = document.createElement('div');
-    debugPanel.id = 'debugPanel';
-    debugPanel.style.position = 'fixed';
-    debugPanel.style.left = '18px';
-    debugPanel.style.bottom = '18px';
-    debugPanel.style.padding = '8px 10px';
-    debugPanel.style.background = 'rgba(0,0,0,0.5)';
-    debugPanel.style.color = '#dfe9ff';
-    debugPanel.style.fontSize = '12px';
-    debugPanel.style.borderRadius = '8px';
-    debugPanel.style.zIndex = '9999';
-    debugPanel.style.maxWidth = '320px';
-    debugPanel.style.maxHeight = '160px';
-    debugPanel.style.overflow = 'auto';
-    debugPanel.innerText = 'debug:';
-    document.body.appendChild(debugPanel);
-    return debugPanel;
-  }
+  // removed visual debug panel (no-op dbgAddLine keeps code safe)
+  function dbgAddLine(/* text */) { /* no-op */ }
 
   let ws;
   let me = null;
 
-  function dbgAddLine(text){
-    try{
-      const p = document.createElement('div');
-      p.textContent = text;
-      p.style.marginBottom = '4px';
-      const dp = ensureDebug();
-      dp.appendChild(p);
-      while(dp.children.length > 8) dp.removeChild(dp.firstChild);
-    }catch(e){/* ignore */}
-  }
+  // dbgAddLine is intentionally a no-op now to remove debug UI output
 
   function formatTime(ts){
     const d = new Date(ts);
@@ -118,8 +89,8 @@
       const dot = document.createElement('div');
       dot.className = 'dot';
       const name = document.createElement('div');
-      // include IP if provided (remoteAddress)
-      name.textContent = u.remoteAddress ? `${u.username} (${u.remoteAddress})` : u.username;
+      // do not expose remote IPs in the UI
+      name.textContent = u.username;
       li.appendChild(dot);
       li.appendChild(name);
       usersList.appendChild(li);
@@ -132,20 +103,20 @@
     ws = new WebSocket(url);
     // expose for debugging
     try{ window._bombWs = ws; } catch(e){}
-    dbgAddLine('connecting...');
+    // debug output disabled
 
     ws.addEventListener('open', () => {
-      dbgAddLine('open');
+      // debug output disabled
       console.log('ws open');
     });
 
     ws.addEventListener('message', (ev) => {
-      dbgAddLine('RAW: ' + String(ev.data).slice(0, 200));
+      // debug output disabled
       console.debug('WS RAW:', ev.data);
       let msg;
       try{ msg = JSON.parse(ev.data); } catch(e){ console.warn('invalid json'); dbgAddLine('invalid json'); return; }
       console.debug('WS MSG:', msg);
-      dbgAddLine('MSG: ' + (msg.type || '?'));
+      // debug output disabled
       if (msg.type === 'joined'){
         me = msg.me;
         roomName.textContent = msg.room;
@@ -155,7 +126,7 @@
         renderHistory(msg.history || []);
 
         // show my ip in debug area and presence header (if available)
-        if (me && me.remoteAddress) dbgAddLine('my ip: ' + me.remoteAddress);
+        // remote IP suppressed
       } else if (msg.type === 'message'){
         addMessage(msg);
       } else if (msg.type === 'system'){
@@ -170,12 +141,12 @@
     });
 
     ws.addEventListener('close', () => {
-      dbgAddLine('closed');
+      // debug output disabled
       addMessage({ type: 'system', text: 'Disconnected', ts: Date.now() });
     });
 
     ws.addEventListener('error', (e) => {
-      dbgAddLine('error');
+      // debug output disabled
       console.error('ws error', e);
     });
   }
